@@ -278,3 +278,39 @@
         <button class="btn btn-outline" onclick="alert('Join queue mock')">➕ Join queue</button>
       </div>
     </div>
+    <!-- USER DASHBOARD -->
+    <div class="screen-card">
+      <div class="screen-title"><span class="badge">User</span> Dashboard</div>
+      <div style="background:#f2f7fd; padding:1.2rem; border-radius:20px;">
+        <div class="notification-bar">🔔 <strong>Notification:</strong> Advancing soon – 2 ahead</div>
+        <div class="flex-row" style="gap:1rem;">
+          <div class="metric-card"><strong>My queue</strong><br> Advising #3</div>
+          <div class="metric-card"><strong>Est. wait</strong><br> 12 min</div>
+          <div class="metric-card"><strong>Services</strong><br> IT, Advising</div>
+        </div>
+        <button class="btn btn-outline" onclick="alert('Join queue mock')">➕ Join queue</button>
+      </div>
+    </div>
+
+    <!-- JOIN QUEUE -->
+    <div class="screen-card">
+      <div class="screen-title"><span class="badge">User</span> Join Queue</div>
+      <div class="flex-row">
+        <div class="form-box" style="max-width:320px;">
+          <div class="form-group">
+            <label>Select service</label>
+            <select>
+              <option>Academic Advising (≈15 min)</option>
+              <option>IT Support (≈10 min)</option>
+              <option>Clinic (≈25 min)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Est. wait time</label>
+            <input type="text" value="~18 minutes" disabled>
+          </div>
+          <button class="btn btn-primary" onclick="alert('Joined queue (mock)')">Join</button>
+          <button class="btn btn-outline" onclick="alert('Left queue (mock)')">Leave</button>
+        </div>
+      </div>
+    </div>
