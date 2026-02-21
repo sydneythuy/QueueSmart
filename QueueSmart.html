@@ -378,3 +378,137 @@
         </div>
       </div>
     </div>
+    <!-- QUEUE MANAGEMENT (with reorder / serve simulation) -->
+    <div class="screen-card">
+      <div class="screen-title"><span class="badge">Admin</span> Queue Management (Advising)</div>
+      <div style="background:#e9f0f8; border-radius:20px; padding:1.5rem;">
+        <div class="queue-item"><span>1. Alex Chen (8 min)</span> <span><button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="moveUp(this)">↑</button> <button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="moveDown(this)">↓</button> <button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="removeItem(this)">✕</button></span></div>
+        <div class="queue-item"><span>2. Jamie Smith (12 min)</span> <span><button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="moveUp(this)">↑</button> <button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="moveDown(this)">↓</button> <button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="removeItem(this)">✕</button></span></div>
+        <div class="queue-item"><span>3. Taylor Kim (20 min)</span> <span><button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="moveUp(this)">↑</button> <button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="moveDown(this)">↓</button> <button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="removeItem(this)">✕</button></span></div>
+        <div class="queue-item"><span>4. Casey Reed (25 min)</span> <span><button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="moveUp(this)">↑</button> <button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="moveDown(this)">↓</button> <button class="btn btn-outline" style="padding:0.2rem 1rem;" onclick="removeItem(this)">✕</button></span></div>
+        <div style="margin-top:1.5rem;">
+          <button class="btn btn-primary" onclick="serveNext()">✅ Serve next</button>
+          <button class="btn btn-outline" onclick="alert('queue refreshed')">⟲ reset</button>
+        </div>
+        <p class="tag" style="margin-top:1rem;">↑↓ reorder, ✕ remove, serve next removes first</p>
+      </div>
+    </div>
+ 
+    <!-- NOTIFICATIONS (standalone) -->
+    <div class="screen-card">
+      <div class="screen-title"><span class="badge">Notifications</span> in‑app alerts</div>
+      <div class="notification-bar">🔔 You are now #2 in Advising</div>
+      <div class="notification-bar" style="background:#e0f0fa;">⏰ Your turn is next — proceed</div>
+      <div class="notification-bar" style="background:#e6ffe6;">✅ IT support completed</div>
+    </div>
+  </div>
+ 
+  <!-- tiny footer -->
+  <div style="margin-top: 2rem; background:#ebf3f9; border-radius: 30px; padding: 0.8rem 2rem; text-align: center; font-size:0.9rem;">
+    ⚡ all forms validated (email, required, min/max). mock data – front‑end only.
+  </div>
+</div>
+ 
+<script>
+  // ---------- VALIDATION (same as before, keeps UI interactive) ----------
+  function validateLogin(e) {
+    e.preventDefault();
+    let email = document.getElementById('loginEmail');
+    let pass = document.getElementById('loginPassword');
+    document.getElementById('loginEmailError').innerText = '';
+    document.getElementById('loginPassError').innerText = '';
+    let ok = true;
+    if (!email.value.match(/^\S+@\S+\.\S+$/)) {
+      document.getElementById('loginEmailError').innerText = 'Valid email required';
+      ok = false;
+    }
+    if (pass.value.length < 6) {
+      document.getElementById('loginPassError').innerText = 'Min 6 characters';
+      ok = false;
+    }
+    if (ok) alert('Login mock OK');
+    return false;
+  }
+  function validateRegister(e) {
+    e.preventDefault();
+    let email = document.getElementById('regEmail');
+    let pass = document.getElementById('regPassword');
+    let conf = document.getElementById('regConfirm');
+    document.getElementById('regEmailError').innerText = '';
+    document.getElementById('regPassError').innerText = '';
+    document.getElementById('regConfirmError').innerText = '';
+    let ok = true;
+    if (!email.value.match(/^\S+@\S+\.\S+$/)) {
+      document.getElementById('regEmailError').innerText = 'Valid email';
+      ok = false;
+    }
+    if (pass.value.length < 6) {
+      document.getElementById('regPassError').innerText = 'Min 6';
+      ok = false;
+    }
+    if (pass.value !== conf.value) {
+      document.getElementById('regConfirmError').innerText = 'Passwords must match';
+      ok = false;
+    }
+    if (ok) alert('Register mock OK');
+    return false;
+  }
+  function validateService(e) {
+    e.preventDefault();
+    let name = document.getElementById('serviceName');
+    let desc = document.getElementById('serviceDesc');
+    let dur = document.getElementById('serviceDuration');
+    document.getElementById('serviceNameError').innerText = '';
+    let ok = true;
+    if (name.value.trim() === '') {
+      document.getElementById('serviceNameError').innerText = 'Name required';
+      ok = false;
+    } else if (name.value.length > 100) {
+      document.getElementById('serviceNameError').innerText = 'Max 100 chars';
+      ok = false;
+    }
+    if (desc.value.trim() === '') {
+      alert('Description required');
+      ok = false;
+    }
+    if (!dur.value || parseInt(dur.value) < 1) {
+      alert('Duration must be ≥1');
+      ok = false;
+    }
+    if (ok) alert('Service "' + name.value + '" created (mock)');
+    return false;
+  }
+ 
+  // ---------- QUEUE MANIPULATION (UI only) ----------
+  function moveUp(btn) {
+    let item = btn.closest('.queue-item');
+    let prev = item.previousElementSibling;
+    if (prev && prev.classList.contains('queue-item')) {
+      item.parentNode.insertBefore(item, prev);
+    }
+  }
+  function moveDown(btn) {
+    let item = btn.closest('.queue-item');
+    let next = item.nextElementSibling;
+    if (next && next.classList.contains('queue-item')) {
+      item.parentNode.insertBefore(next, item);
+    }
+  }
+  function removeItem(btn) {
+    let item = btn.closest('.queue-item');
+    item.remove();
+  }
+  function serveNext() {
+    let container = document.querySelector('.screen-card .queue-item')?.parentNode;
+    if (container) {
+      let first = container.querySelector('.queue-item');
+      if (first) {
+        first.style.background = '#d4edda';
+        first.innerHTML = '✅ ' + first.innerText + ' (served)';
+        setTimeout(() => first.remove(), 800);
+      } else alert('Queue empty');
+    }
+  }
+</script>
+</body>
+</html>
