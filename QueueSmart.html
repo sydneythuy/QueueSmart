@@ -301,3 +301,80 @@
         </div>
       </div>
     </div>
+        <!-- QUEUE STATUS -->
+    <div class="screen-card">
+      <div class="screen-title"><span class="badge">User</span> Queue Status</div>
+      <div style="background:#eef4fa; border-radius:20px; padding:1.2rem; max-width:500px;">
+        <p><strong>Position:</strong> #4 of 7</p>
+        <p><strong>Wait time:</strong> 21 min</p>
+        <div style="display:flex; gap:2rem; margin:1rem 0;">
+          <span>⏺ waiting</span> <span style="font-weight:bold; color:#2b6f9b;">⏺ almost ready</span> <span>⏺ served</span>
+        </div>
+        <div style="background:#c7dff5; height:8px; width:60%; border-radius:10px;"></div>
+        <p class="tag" style="margin-top:1rem;">status: almost ready (next 2)</p>
+      </div>
+    </div>
+ 
+    <!-- HISTORY -->
+    <div class="screen-card">
+      <div class="screen-title"><span class="badge">User</span> History</div>
+      <div class="card-list" style="max-width:500px;">
+        <div class="history-row"><span>2025-03-10</span><span>IT Support</span><span>served</span><span class="tag">done</span></div>
+        <div class="history-row"><span>2025-03-08</span><span>Advising</span><span>missed</span><span class="tag">no‑show</span></div>
+        <div class="history-row"><span>2025-03-05</span><span>Clinic</span><span>served</span><span class="tag">done</span></div>
+      </div>
+    </div>
+ 
+    <!-- ADMIN DASHBOARD -->
+    <div class="screen-card">
+      <div class="screen-title"><span class="badge">Admin</span> Dashboard</div>
+      <div class="admin-metrics">
+        <div class="metric-card"><span>👥 Advising</span><br>8 in queue</div>
+        <div class="metric-card"><span>💻 IT</span><br>3 in queue</div>
+        <div class="metric-card"><span>🩺 Clinic</span><br>12 in queue</div>
+      </div>
+      <div style="margin:1.5rem 0;">
+        <button class="btn btn-outline" onclick="alert('Toggle mock')">⏯ Open/Close Advising</button>
+        <button class="btn btn-outline" onclick="alert('Reset mock')">🔄 Reset queue</button>
+      </div>
+    </div>
+ 
+    <!-- SERVICE MANAGEMENT -->
+    <div class="screen-card">
+      <div class="screen-title"><span class="badge">Admin</span> Service Management</div>
+      <div class="flex-row">
+        <div class="form-box">
+          <h4>➕ New service</h4>
+          <form onsubmit="return validateService(event)">
+            <div class="form-group">
+              <label>Service name * (max 100)</label>
+              <input type="text" id="serviceName" maxlength="100" required>
+              <div class="error-msg" id="serviceNameError"></div>
+            </div>
+            <div class="form-group">
+              <label>Description *</label>
+              <textarea id="serviceDesc" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+              <label>Duration (min) *</label>
+              <input type="number" id="serviceDuration" min="1" required>
+            </div>
+            <div class="form-group">
+              <label>Priority</label>
+              <select id="servicePriority">
+                <option>Low</option><option selected>Medium</option><option>High</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </form>
+        </div>
+        <div>
+          <h4>📋 existing</h4>
+          <ul style="background:#f3f7fc; padding:1rem 2rem; border-radius:20px;">
+            <li>Advising (15 min, high)</li>
+            <li>IT support (10 min, medium)</li>
+            <li>Clinic (25 min, high)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
